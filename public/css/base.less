@@ -8,6 +8,37 @@ body {
     width: 100%;
 }
 
+@media screen and (max-width:768px) {
+    .menu-bar {
+        display: none;
+    }
+
+    .main {
+        padding-bottom: 0;
+    }
+
+    .foot-bar {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 450px) {
+
+    .login,
+    .register,
+    .repass {
+        .layui-form-item {
+            .layui-inline {
+                display: inline-block;
+                margin-right: 0;
+                margin-bottom: 0;
+                clear: initial;
+            }
+        }
+    }
+
+}
+
 .wrapper {
     position: relative;
     min-height: 100%;
@@ -16,19 +47,6 @@ body {
     .main {
         padding-bottom: 60px;
     }
-
-    @media screen and (max-width:768px){
-        .login-btn{
-            display: none;
-        }
-        .main {
-            padding-bottom: 0;
-        }
-        .foot-bar{
-            display: none;
-        }
-    }
-
 }
 
 /* 清除浮动 */
@@ -84,15 +102,103 @@ body {
     text-indent: -9999em;
 }
 
-.login{
+.login {
     width: 90%;
     margin: 0 auto;
-    padding: 30px 0 0;
-    .layui-form{
-        .layui-form-item{
-            label{
+    padding: 40px 0 0;
+
+    .layui-form {
+        .layui-form-item {
+            label {
                 line-height: 26px;
             }
+        }
+
+        .repass-link {
+            a {
+                color: @1e9;
+            }
+        }
+
+        .login-link {
+            a {
+                color: @ff5;
+            }
+        }
+    }
+}
+
+.register {
+    width: 90%;
+    margin: 0 auto;
+    padding: 40px 0 0;
+
+    .layui-form {
+        .layui-form-item {
+            label {
+                line-height: 26px;
+            }
+        }
+
+        .reg-link {
+            a {
+                color: @ff5;
+            }
+        }
+    }
+}
+
+.repass {
+    width: 90%;
+    margin: 0 auto;
+    padding: 40px 0 0;
+
+    .layui-form {
+        .layui-form-item {
+            label {
+                line-height: 26px;
+            }
+        }
+
+        .reg-link {
+            a {
+                color: @1e9;
+            }
+        }
+
+        .login-link {
+            a {
+                color: @ff5;
+            }
+        }
+    }
+}
+
+
+.login-class {
+    .layui-layer-btn-c {
+        padding-bottom: 32px;
+
+        a {
+            height: 36px;
+            line-height: 36px;
+            border-color: @1e9;
+            background-color: @1e9;
+            color: @fff;
+        }
+    }
+}
+
+.register-class {
+    .layui-layer-btn-c {
+        padding-bottom: 32px;
+
+        a {
+            height: 36px;
+            line-height: 36px;
+            border-color: @ff5;
+            background-color: @ff5;
+            color: @fff;
         }
     }
 }

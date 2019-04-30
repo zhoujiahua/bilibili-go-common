@@ -34,9 +34,14 @@
                             </ul>
                         </div>
                         <div class="layui-col-md3  layui-col-xs12  clearfix">
-                            <div class="login-btn fr">
+                            <div class="login-btn login-tbar layui-show fr">
                                 <a href="javascript:;" class="layui-btn layui-btn-normal" id="loginBnt">登录</a>
                                 <a href="javascript:;" class="layui-btn layui-btn-danger" id="registerBtn">注册</a>
+                            </div>
+                            <div class="login-info login-tbar fr">
+                                <a href="javascript:;" id="loginUser">欢迎：<span>Admin</span></a>
+                                <span>&nbsp;|&nbsp;</span>
+                                <a href="javascript:;" id="loginOut">注销</a>
                             </div>
                         </div>
                     </div>
@@ -110,16 +115,13 @@
                     </div>
                 </div>
                 <div class="layui-form-item clearfix">
-                    <div class="layui-inline fr">
+                    <div class="repass-link layui-inline fl">
+                        <a href="javascript:;">忘记密码</a>
+                    </div>
+                    <div class="login-link layui-inline fr">
                         <a href="javascript:;">没有账户去注册 &gt;&gt;</a>
                     </div>
                 </div>
-                <!-- <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="login">登录</button>
-                        <button class="layui-btn layui-btn-danger" lay-submit="" lay-filter="register">注册</button>
-                    </div>
-                </div> -->
             </div>
         </div>
     </script>
@@ -129,31 +131,54 @@
         <div class="register">
             <div class="layui-form" action="" lay-filter="example">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">账户名称：</label>
-                    <div class="layui-inline">
-                        <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入账户"
+                    <label>账户名称：</label>
+                    <div>
+                        <input type="text" name="setname" lay-verify="title" autocomplete="off" placeholder="请输入账户"
                             class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">设置密码：</label>
-                    <div class="layui-inline">
-                        <input type="password" name="password" placeholder="请输入密码" autocomplete="off"
+                    <label>设置密码：</label>
+                    <div>
+                        <input type="password" name="setpass" placeholder="请输入密码" autocomplete="off"
                             class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">确认密码：</label>
-                    <div class="layui-inline">
-                        <input type="password" name="repassword" placeholder="请输入密码" autocomplete="off"
+                    <label>确认密码：</label>
+                    <div>
+                        <input type="password" name="setrepass" placeholder="请输入密码" autocomplete="off"
                             class="layui-input">
                     </div>
                 </div>
-                <!-- <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-danger" lay-submit="" lay-filter="register">注册</button>
+                <div class="layui-form-item clearfix">
+                    <div class="reg-link layui-inline fr">
+                        <a href="javascript:;">已有账户去登录 &gt;&gt;</a>
                     </div>
-                </div> -->
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- 找回密码 -->
+    <script type="text/html" id="repassHtml">
+        <div class="repass">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <label>输入邮箱：</label>
+                    <div>
+                        <input type="text" name="reemail" lay-verify="title" autocomplete="off" placeholder="请输入邮箱"
+                            class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item clearfix">
+                    <div class="reg-link layui-inline fl">
+                        <a href="javascript:;">已有账户去登录 </a>
+                    </div>
+                    <div class="login-link layui-inline fr">
+                        <a href="javascript:;">没有账户去注册 &gt;&gt;</a>
+                    </div>
+                </div>
             </div>
         </div>
     </script>

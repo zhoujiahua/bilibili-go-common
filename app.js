@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 //引入数据链接
-const dbconn = require("./db/db").dblink;
+const dbconn = require("./db/db");
 
 //引入模块文件
 const admin = require("./routers/admin");
@@ -45,8 +45,7 @@ app.use("/", main);
 // });
 
 //连接数据库
-// mongoose.connect("mongodb://localhost:27017/blog",(err)=>{
-mongoose.connect(dbconn, (err) => {
+mongoose.connect(dbconn.onlineLink, (err) => {
     if (err) {
         console.log("数据库连接失败！");
     } else {
