@@ -1,8 +1,14 @@
 const express = require("express");
 const swig = require("swig");
+const bodyParser = require("body-parser");
+
 //加载数据库
 const mongoose = require("mongoose");
 const app = express();
+
+//使用body-parser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 //引入数据链接
 const dbconn = require("./db/db");
@@ -45,7 +51,7 @@ app.use("/", main);
 // });
 
 //连接数据库
-mongoose.connect(dbconn.onlineLink, (err) => {
+mongoose.connect(dbconn.localLink, (err) => {
     if (err) {
         console.log("数据库连接失败！");
     } else {

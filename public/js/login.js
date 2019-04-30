@@ -1,8 +1,11 @@
-layui.use(["layer", "laydate", "form", "element"], () => {
-    let layer = layui.layer,
+layui.use(["layer", "laydate", "form", "element"], function () {
+    var layer = layui.layer,
         laydate = layui.laydate,
         form = layui.form,
-        element = layui.element;
+        element = layui.element,
+        device = layui.device();
+
+    $(".device").text("您当前的操作系统为：" + device.os);
 
     $("#loginBnt").on("click", loginBox);
     $("#registerBtn").on("click", registerBox);
@@ -56,19 +59,48 @@ layui.use(["layer", "laydate", "form", "element"], () => {
             },
             yes: function (index) {
                 var uname = $('[name="username"]').val().trim(),
-                    upass = $('[name="password"]').val().trim();
+                    upass = $('[name="password"]').val().trim(),
+                    loadTip;
                 if (uname.length < 3 || upass.length < 3) {
                     layer.msg("用户名和密码不能为空并且不能小于3位！");
                     return false;
                 }
-                var loadTip = layer.load();
-                setTimeout(function () {
-                    $(".login-btn").removeClass("layui-show");
-                    $(".login-info").addClass("layui-show");
-                    layer.msg("登录成功");
-                    layer.close(index);
-                    layer.close(loadTip);
-                }, 800)
+
+                //数据提交
+                // $.post("/api/login", { username: uname, password: upass }, function (res) {
+                //     debugger
+                // }, "josn");
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/login",
+                    data: { username: uname, password: upass },
+                    dataType: "json",
+                    beforeSend: function () {
+                        loadTip = layer.load();
+                        console.log("数据正在提交");
+                    },
+                    success: function (res) {
+                        if (res.code) {
+                            layer.msg(res.msg);
+                            layer.close(loadTip);
+                            return
+                        }
+                        setTimeout(function () {
+                            $(".login-btn").removeClass("layui-show");
+                            $(".login-info").addClass("layui-show");
+                            $("#loginUser span").text(res.userInfo.username).attr("data-id", res.userInfo.userid);
+                            layer.msg("登录成功");
+                            layer.close(index);
+                            layer.close(loadTip);
+                        }, 600)
+                    },
+                    complete: function () {
+                        console.log("数据提交完成");
+                    },
+                    error: function () { }
+                });
+
             }
         });
     }
@@ -105,9 +137,9 @@ layui.use(["layer", "laydate", "form", "element"], () => {
                     }
                 })
                 $('[name="setrepass"]').blur(function () {
-                    var values = $(this).val().trim();
-                    if (values.length < 3) {
-                        layer.msg("密码不能为空并且不能小于3位");
+                    var values = ($(this).val().trim() == $('[name="setpass"]').val().trim());
+                    if (!values) {
+                        layer.msg("两次密码不一致！");
                         return false;
                     }
                 })
@@ -119,20 +151,47 @@ layui.use(["layer", "laydate", "form", "element"], () => {
             yes: function (index) {
                 var setname = $('[name="setname"]').val().trim(),
                     setpass = $('[name="setpass"]').val().trim(),
-                    setrepass = $('[name="setrepass"]').val().trim();
+                    setrepass = $('[name="setrepass"]').val().trim(),
+                    loadTip;
                 if (setname.length < 3 || setpass.length < 3 || setrepass.length < 3) {
                     layer.msg("注册信息不能为空并且不能小于3位！");
                     return false;
                 }
-                var loadTip = layer.load();
-                setTimeout(function () {
-                    $(".login-btn").removeClass("layui-show");
-                    $(".login-info").addClass("layui-show");
-                    layer.msg("注册成功");
-                    layer.close(index);
-                    layer.close(loadTip);
-                }, 800)
+                if (setpass != setrepass) {
+                    layer.msg("两次密码不一致！");
+                    return false;
+                }
 
+                $.ajax({
+                    type: "POST",
+                    url: "/api/register",
+                    data: { setname: setname, setpass: setpass, setrepass: setrepass },
+                    dataType: "json",
+                    beforeSend() {
+                        console.log("数据提交中");
+                        loadTip = layer.load();
+                    },
+                    success: function (res) {
+                        debugger
+                        if (res.code) {
+                            layer.msg(res.msg);
+                            layer.close(loadTip);
+                            return
+                        }
+                        setTimeout(function () {
+                            $(".login-btn").removeClass("layui-show");
+                            $(".login-info").addClass("layui-show");
+                            $("#loginUser span").text(res.userInfo.username).attr("data-id", res.userInfo.userid);
+                            layer.msg(res.msg);
+                            layer.close(index);
+                            layer.close(loadTip);
+                        }, 600)
+                    },
+                    complete: function () {
+                        console.log("数据提交完成");
+                    },
+                    error: function () { }
+                });
             }
         });
     }
@@ -215,22 +274,5 @@ layui.use(["layer", "laydate", "form", "element"], () => {
         }
         return false;
     }
-
-
-    //监听登录
-    form.on('submit(login)', function (data) {
-        layer.alert(JSON.stringify(data.field), {
-            title: '最终的提交信息'
-        })
-        return false;
-    });
-
-    //监听注册
-    form.on('submit(register)', function (data) {
-        layer.alert(JSON.stringify(data.field), {
-            title: '最终的提交信息'
-        })
-        return false;
-    });
 
 })
