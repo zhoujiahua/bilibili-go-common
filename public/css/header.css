@@ -1,0 +1,7 @@
+@charset "UTF-8";
+.wrapper .header .nav-bar {
+  background-color: #393D49;
+}
+.wrapper .header .nav-bar .login-btn {
+  padding: 10px 0;
+}

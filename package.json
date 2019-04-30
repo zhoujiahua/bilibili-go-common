@@ -1,0 +1,19 @@
+{
+  "name": "nodeme",
+  "version": "1.0.0",
+  "description": "node me",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JiaHua",
+  "license": "ISC",
+  "devDependencies": {
+    "mongoose": "^5.5.4",
+    "swig": "^1.4.2"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "router": "^1.3.3"
+  }
+}

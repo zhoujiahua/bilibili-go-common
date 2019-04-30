@@ -1,0 +1,99 @@
+@charset "UTF-8";
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+.wrapper {
+  position: relative;
+  min-height: 100%;
+  box-sizing: content-box;
+}
+.wrapper .main {
+  padding-bottom: 60px;
+}
+@media screen and (max-width: 768px) {
+  .wrapper .login-btn {
+    display: none;
+  }
+  .wrapper .main {
+    padding-bottom: 0;
+  }
+  .wrapper .foot-bar {
+    display: none;
+  }
+}
+/* 清除浮动 */
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+.clearfix:after {
+  height: 0;
+  line-height: 0;
+  visibility: hidden;
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
+  /*IE/7/6*/
+}
+/* 公共样式提取 */
+.w {
+  width: 1200px;
+  margin: 0 auto;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.al {
+  text-align: left;
+}
+.ac {
+  text-align: center;
+}
+.ar {
+  text-align: right;
+}
+.hide {
+  display: none;
+}
+.ind {
+  text-indent: -9999em;
+}
+.login {
+  width: 90%;
+  margin: 0 auto;
+  padding: 30px 0 0;
+}
+.login .layui-form .layui-form-item label {
+  line-height: 26px;
+}
+.wrapper .header .nav-bar {
+  background-color: #393D49;
+}
+.wrapper .header .nav-bar .login-btn {
+  padding: 10px 0;
+}
+.wrapper .footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+.wrapper .footer .foot-bar {
+  border-top: 1px solid #e2e2e2;
+  text-align: center;
+}
+.wrapper .footer .foot-bar p {
+  line-height: 60px;
+  color: #737573;
+}
+.wrapper .main {
+  background-color: bgc;
+}
