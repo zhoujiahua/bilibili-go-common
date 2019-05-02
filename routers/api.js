@@ -40,6 +40,7 @@ router.post("/login", (req, res, next) => {
             msgData.code = 3;
             msgData.msg = "用户名或密码不正确！";
             res.json(msgData);
+            req.cookies.set("userInfo","");
             return
         }
         msgData.msg = "登录成功!";
