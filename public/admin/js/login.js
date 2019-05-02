@@ -83,10 +83,11 @@
                                 layer.close(loadTip);
                                 return
                             }
-                            setTimeout(function () {
+                            var timer = setTimeout(function () {
                                 // $(".login-btn").removeClass("layui-show");
                                 // $(".login-info").addClass("layui-show");
                                 // $("#loginUser span").text(res.userInfo.username).attr("data-id", res.userInfo.userid);
+                                clearTimeout(timer);
                                 layer.msg("登录成功");
                                 layer.close(index);
                                 layer.close(loadTip);
@@ -175,13 +176,14 @@
                                 layer.close(loadTip);
                                 return
                             }
-                            setTimeout(function () {
+                            var timer = setTimeout(function () {
                                 // $(".login-btn").removeClass("layui-show");
                                 // $(".login-info").addClass("layui-show");
                                 // $("#loginUser span").text(res.userInfo.username).attr("data-id", res.userInfo.userid);
+                                clearTimeout(timer);
                                 layer.msg(res.msg);
-                                layer.close(index);
                                 layer.close(loadTip);
+                                layer.close(index);
                                 window.location.reload();
                             }, 600)
                         },
@@ -204,7 +206,7 @@
                 closeBtn: 1,
                 area: "360px",
                 shade: 0.8,
-                id: 'repassbox', //设定一个id，防止重复弹出
+                id: 'emailbox', //设定一个id，防止重复弹出
                 btn: ['重置密码'],
                 btnAlign: 'c',
                 moveType: 1, //拖拽模式，0或者1
@@ -241,12 +243,13 @@
                         return false;
                     }
                     var loadTip = layer.load();
-                    setTimeout(function () {
-                        $(".login-btn").removeClass("layui-show");
-                        $(".login-info").addClass("layui-show");
+                    var timer = setTimeout(function () {
+                        clearTimeout(timer);
+                        // $(".login-btn").removeClass("layui-show");
+                        // $(".login-info").addClass("layui-show");
                         layer.msg("邮件发送成功！");
-                        // layer.close(index);
                         layer.close(loadTip);
+                        layer.close(index);
                     }, 800)
                 }
             });

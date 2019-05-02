@@ -9,10 +9,6 @@ router.use((req, res, next) => {
     next();
 })
 
-router.get("/user", (req, res, next) => {
-    res.send("api - User");
-});
-
 //登录
 router.post("/login", (req, res, next) => {
     let r = req.body,
@@ -40,7 +36,7 @@ router.post("/login", (req, res, next) => {
             msgData.code = 3;
             msgData.msg = "用户名或密码不正确！";
             res.json(msgData);
-            req.cookies.set("userInfo","");
+            req.cookies.set("userInfo", "");
             return
         }
         msgData.msg = "登录成功!";
@@ -59,7 +55,7 @@ router.post("/login", (req, res, next) => {
 //注册
 router.post("/register", (req, res, next) => {
     let r = req.body;
-        toLowName = r.setname.toLowerCase();
+    toLowName = r.setname.toLowerCase();
     console.log(r);
     if (toLowName == "") {
         msgData.code = 4;

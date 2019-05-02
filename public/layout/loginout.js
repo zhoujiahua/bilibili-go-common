@@ -9,9 +9,8 @@
             $.getJSON("/api/loginout", {},
                 function (res) {
                     if (!res.code) {
-                        setTimeout(function () {
-                            // $(".login-info").removeClass("layui-show");
-                            // $(".login-btn").addClass("layui-show");
+                        var timer = setTimeout(function () {
+                            clearTimeout(timer);
                             layer.msg(res.msg);
                             layer.close(loadTip);
                             window.location.reload();

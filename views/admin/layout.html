@@ -7,9 +7,9 @@
         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
     <title>首页</title>
-    <link rel="stylesheet" type="text/css" href="./public/lib/layui/css/layui.css">
-    <link rel="stylesheet" type="text/css" href="./public/lib/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="./public/admin/css/layout.css">
+    <link rel="stylesheet" type="text/css" href="./../public/lib/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="./../public/lib/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="./../public/admin/css/layout.css">
 
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
@@ -17,6 +17,7 @@
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script src="./../public/lib/layui/layui.js"></script>
 </head>
 
 <body class="layui-layout-body">
@@ -25,11 +26,11 @@
             <!-- header 头部区域 -->
             <div class="header">
                 <div class="layui-header">
-                    <div class="layui-logo">小掌部落后台管理</div>
+                    <div class="layui-logo">后台管理</div>
                     <ul class="layui-nav layui-layout-left">
-                        <li class="layui-nav-item"><a href="">控制台</a></li>
-                        <li class="layui-nav-item"><a href="">商品管理</a></li>
-                        <li class="layui-nav-item"><a href="">用户</a></li>
+                        <li class="layui-nav-item"><a href="/admin">后台信息</a></li>
+                        <li class="layui-nav-item"><a href="/admin/goods">商品管理</a></li>
+                        <li class="layui-nav-item"><a href="/admin/user">用户管理</a></li>
                         <li class="layui-nav-item">
                             <a href="javascript:;">其它系统</a>
                             <dl class="layui-nav-child">
@@ -41,7 +42,7 @@
                     </ul>
                     <ul class="layui-nav layui-layout-right">
                         <li class="layui-nav-item">
-                            <a href="javascript:;">
+                            <a href="javascript:;" data-id="{{ userInfo.userid }}">
                                 <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                                 <span>{{ userInfo.username }}</span>
                             </a>
@@ -63,11 +64,28 @@
                         <div class="layui-side-scroll">
                             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                                 <li class="layui-nav-item layui-nav-itemed">
-                                    <a class="" href="javascript:;">所有商品</a>
+                                    <a href="javascript:;">系统设置</a>
                                     <dl class="layui-nav-child">
                                         <dd><a href="javascript:;">列表一</a></dd>
                                         <dd><a href="javascript:;">列表二</a></dd>
                                         <dd><a href="javascript:;">列表三</a></dd>
+                                        <dd><a href="">超链接</a></dd>
+                                    </dl>
+                                </li>
+                                <li class="layui-nav-item">
+                                    <a href="javascript:;">用户管理</a>
+                                    <dl class="layui-nav-child">
+                                        <dd><a href="/admin/user">用户列表</a></dd>
+                                        <dd><a href="javascript:;">列表二</a></dd>
+                                        <dd><a href="javascript:;">列表三</a></dd>
+                                        <dd><a href="">超链接</a></dd>
+                                    </dl>
+                                </li>
+                                <li class="layui-nav-item">
+                                    <a href="javascript:;">所有商品</a>
+                                    <dl class="layui-nav-child">
+                                        <dd><a href="javascript:;">列表一</a></dd>
+                                        <dd><a href="javascript:;">列表二</a></dd>
                                         <dd><a href="">超链接</a></dd>
                                     </dl>
                                 </li>
@@ -79,8 +97,8 @@
                                         <dd><a href="">超链接</a></dd>
                                     </dl>
                                 </li>
-                                <li class="layui-nav-item"><a href="">云市场</a></li>
-                                <li class="layui-nav-item"><a href="">发布商品</a></li>
+                                <li class="layui-nav-item"><a href="/" target="_blank">前台首页</a></li>
+                                <li class="layui-nav-item"><a href="/">系统信息</a></li>
                             </ul>
                         </div>
                     </div>
@@ -104,9 +122,8 @@
     </div>
 
     <!-- js -->
-    <script src="./public/lib/layui/layui.js"></script>
-    <script src="./public/admin/js/layout.js"></script>
-    <script src="./public/layout/loginout.js"></script>
+    <script src="./../public/admin/js/layout.js"></script>
+    <script src="./../public/layout/loginout.js"></script>
 </body>
 
 </html>
