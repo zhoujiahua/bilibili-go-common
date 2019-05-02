@@ -13,12 +13,12 @@ router.get("/user", (req, res, next) => {
     res.send("api - User");
 });
 
-
 //登录
 router.post("/login", (req, res, next) => {
-    let r = req.body;
-    console.log(r);
-    if (r.username == "") {
+    let r = req.body,
+        toLowName = r.username.toLowerCase();
+    // console.log(r);
+    if (toLowName == "") {
         msgData.code = 1
         msgData.msg = "账户名不能为空！"
         res.json(msgData);
@@ -32,7 +32,7 @@ router.post("/login", (req, res, next) => {
     }
 
     User.findOne({
-        username: r.username,
+        username: toLowName,
         password: r.password
     }).then((userInfo) => {
         console.log(userInfo);
@@ -44,9 +44,13 @@ router.post("/login", (req, res, next) => {
         }
         msgData.msg = "登录成功!";
         msgData.userInfo = {
-            userid: userInfo.id,
+            userid: userInfo._id,
             username: userInfo.username
         };
+        req.cookies.set("userInfo", JSON.stringify({
+            userid: userInfo._id,
+            username: userInfo.username
+        }));
         res.json(msgData);
     })
 })
@@ -54,8 +58,9 @@ router.post("/login", (req, res, next) => {
 //注册
 router.post("/register", (req, res, next) => {
     let r = req.body;
+        toLowName = r.setname.toLowerCase();
     console.log(r);
-    if (r.setname == "") {
+    if (toLowName == "") {
         msgData.code = 4;
         msgData.msg = "用户名不能为空！";
         res.json(msgData);
@@ -75,9 +80,9 @@ router.post("/register", (req, res, next) => {
     }
 
     User.findOne({
-        username: r.setname
+        username: toLowName
     }).then((userInfo) => {
-        console.log(userInfo);
+        // console.log(userInfo);
         if (userInfo) {
             msgData.code = 7;
             msgData.msg = "当前用户已存在！";
@@ -85,21 +90,31 @@ router.post("/register", (req, res, next) => {
             return
         }
         let user = new User({
-            username: r.setname,
+            username: toLowName,
             password: r.setpass
         });
         return user.save();
     }).then((newUserInfo) => {
         if (!newUserInfo) { return }
-        console.log(newUserInfo);
+        // console.log(newUserInfo);
         msgData.msg = "用户注册成功";
         msgData.userInfo = {
-            userid: newUserInfo.id,
+            userid: newUserInfo._id,
             username: newUserInfo.username
         };
+        req.cookies.set("userInfo", JSON.stringify({
+            userid: newUserInfo._id,
+            username: newUserInfo.username
+        }));
         res.json(msgData);
     })
 })
 
+//用户注销
+router.get("/loginout", (req, res, next) => {
+    req.cookies.set("userInfo", "");
+    msgData.msg = "用户注销成功！";
+    res.json(msgData);
+})
 
 module.exports = router;

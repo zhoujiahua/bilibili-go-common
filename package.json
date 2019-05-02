@@ -2,13 +2,14 @@
   "name": "nodeme",
   "version": "1.0.0",
   "description": "node me",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "JiaHua",
   "license": "ISC",
   "devDependencies": {
+    "cookies": "^0.7.3",
     "mongoose": "^5.5.4",
     "swig": "^1.4.2"
   },

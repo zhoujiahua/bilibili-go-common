@@ -1,13 +1,15 @@
 const express = require("express");
 const swig = require("swig");
 const bodyParser = require("body-parser");
+const Cookies = require("cookies");
+const User = require("./models/User");
 
 //加载数据库
 const mongoose = require("mongoose");
 const app = express();
 
 //使用body-parser
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //引入数据链接
@@ -33,6 +35,28 @@ app.set("view engine", "html");
 // 开发过程中，需要取消模版缓存
 swig.setDefaults({
     cache: false
+});
+
+//设置cookie
+app.use((req, res, next) => {
+    req.cookies = new Cookies(req, res);
+    //解析登录用户cookie信息
+    req.userInfo = {};
+    if (req.cookies.get("userInfo")) {
+        console.log(`解析当前登录cookie信息：${req.cookies.get("userInfo")}`);
+        try {
+            req.userInfo = JSON.parse(req.cookies.get("userInfo"));
+            //获取当前用户是否是管理员
+            User.findById(req.userInfo.userid).then((userInfo) => {
+                console.log("ID查询当前用户信息：" + userInfo);
+                req.userInfo.isAdmin = Boolean(userInfo.isAdmin);
+                next();
+            })
+
+        } catch (e) { next(); }
+    } else {
+        next();
+    }
 });
 
 //app.get("/",(req,res,next) => {
