@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("./../models/User");
+const cookieTime = 6000 * 30;
 
 //统一验证信息
 let msgData;
@@ -46,8 +47,9 @@ router.post("/login", (req, res, next) => {
         };
         req.cookies.set("userInfo", JSON.stringify({
             userid: userInfo._id,
-            username: userInfo.username
-        }));
+            username: userInfo.username,
+            usercode: req.strCode.str + new Date().getTime()
+        }), { signed: true, maxAge: cookieTime });
         res.json(msgData);
     })
 })
@@ -101,8 +103,9 @@ router.post("/register", (req, res, next) => {
         };
         req.cookies.set("userInfo", JSON.stringify({
             userid: newUserInfo._id,
-            username: newUserInfo.username
-        }));
+            username: newUserInfo.username,
+            usercode: req.strCode.str + new Date().getTime()
+        }), { signed: true, maxAge: cookieTime });
         res.json(msgData);
     })
 })

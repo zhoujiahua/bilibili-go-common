@@ -42,8 +42,7 @@ router.get("/user/info", (req, res, next) => {
     let r = req.query,
         page = r.page || 1,
         limit = r.limit || 10,
-        skip = (page - 1) * limit,
-        count = 0;
+        skip = (page - 1) * limit;
     User.find().count({}, (err, num) => {
         if (err) {
             res.json({
@@ -65,7 +64,6 @@ router.get("/user/info", (req, res, next) => {
             });
         })
     })
-
 })
 
 module.exports = router;

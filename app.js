@@ -2,7 +2,9 @@ const express = require("express");
 const swig = require("swig");
 const bodyParser = require("body-parser");
 const Cookies = require("cookies");
+const cookieParser = require("cookie-parser");
 const User = require("./models/User");
+const configInc = require("./config/config.inc");
 
 //加载数据库
 const mongoose = require("mongoose");
@@ -11,6 +13,10 @@ const app = express();
 //使用body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+//注册使用cookie-parser
+app.use(cookieParser());
+
 
 //引入数据链接
 const dbconn = require("./db/db");
@@ -37,18 +43,45 @@ swig.setDefaults({
     cache: false
 });
 
+//随机字符串
+app.use((req, res, next) => {
+    let num, str;
+    //随机数
+    function GetRandomNum(Min, Max) {
+        var Range = Max - Min;
+        var Rand = Math.random();
+        return (Min + Math.round(Rand * Range));
+    }
+    num = GetRandomNum(1, 10);
+
+    //随机字符串
+    var chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    function generateMixed(n) {
+        var res = "";
+        for (var i = 0; i < n; i++) {
+            var id = Math.ceil(Math.random() * 35);
+            res += chars[id];
+        }
+        return res;
+    }
+    str = generateMixed(10);
+    req.strCode = { num, str };
+    next();
+})
+
 //设置cookie
 app.use((req, res, next) => {
-    req.cookies = new Cookies(req, res);
+    req.cookies = new Cookies(req, res, { keys: configInc.keys });
+
     //解析登录用户cookie信息
     req.userInfo = {};
-    if (req.cookies.get("userInfo")) {
-        console.log(`解析当前登录cookie信息：${req.cookies.get("userInfo")}`);
+    if (req.cookies.get("userInfo", { signed: true })) {
+        // console.log(`解析当前登录cookie信息：${req.cookies.get("userInfo", { signed: true })}`);
         try {
-            req.userInfo = JSON.parse(req.cookies.get("userInfo"));
+            req.userInfo = JSON.parse(req.cookies.get("userInfo", { signed: true }));
             //获取当前用户是否是管理员
             User.findById(req.userInfo.userid).then((userInfo) => {
-                console.log("ID查询当前用户信息：" + userInfo);
+                // console.log("ID查询当前用户信息：" + userInfo);
                 req.userInfo.isAdmin = Boolean(userInfo.isAdmin);
                 next();
             })
