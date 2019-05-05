@@ -19,19 +19,6 @@ router.use((req, res, next) => {
 router.post("/login", (req, res, next) => {
     let r = req.body,
         toLowName = r.username.toLowerCase();
-    // console.log(r);
-    // if (toLowName == "") {
-    //     msgData.code = 1
-    //     msgData.msg = "账户名不能为空！"
-    //     res.json(msgData);
-    //     return
-    // }
-    // if (r.password == "") {
-    //     msgData.code = 2
-    //     msgData.msg = "密码不能为空！"
-    //     res.json(msgData);
-    //     return
-    // }
 
     User.findOne({
         username: toLowName
@@ -43,7 +30,9 @@ router.post("/login", (req, res, next) => {
         }
 
         bcrypt.compare(r.password, userInfo.password, (err, isMatch) => {
-            if (err) { throw err }
+            if (err) {
+                throw err
+            }
             console.log(isMatch)
             if (isMatch) {
                 msgData.msg = "登录成功!";
@@ -69,35 +58,6 @@ router.post("/login", (req, res, next) => {
 
         })
     })
-
-    // User.findOne({
-    //     username: toLowName,
-    //     password: r.password
-    // }).then((userInfo) => {
-    //     console.log(userInfo);
-    //     if (!userInfo) {
-    //         msgData.code = 3;
-    //         msgData.msg = "用户名或密码不正确！";
-    //         res.json(msgData);
-    //         req.cookies.set("userInfo", "");
-    //         return
-    //     }
-    //     msgData.msg = "登录成功!";
-    //     msgData.userInfo = {
-    //         userid: userInfo._id,
-    //         username: userInfo.username
-    //     };
-    //     req.cookies.set("userInfo", JSON.stringify({
-    //         userid: userInfo._id,
-    //         username: userInfo.username,
-    //         usercode: req.strCode.str + new Date().getTime()
-    //     }), {
-    //         signed: true,
-    //         maxAge: cookieTime
-    //     });
-    //     res.json(msgData);
-    // })
-
 })
 
 //注册
@@ -141,7 +101,9 @@ router.post("/register", (req, res, next) => {
         //密码加密
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
-                if (err) { throw err }
+                if (err) {
+                    throw err
+                }
                 newUser.password = hash;
 
                 //存储方法
@@ -169,7 +131,7 @@ router.post("/register", (req, res, next) => {
             })
         })
     })
-    
+
     // .then((newUserInfo) => {
     //     if (!newUserInfo) {
     //         return

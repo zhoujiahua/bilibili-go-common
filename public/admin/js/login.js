@@ -1,7 +1,6 @@
 (function () {
     layui.use(["layer", "laydate", "form", "element"], function () {
         var layer = layui.layer,
-
             // laydate = layui.laydate,
             // form = layui.form,
             // element = layui.element,
@@ -71,7 +70,10 @@
                     $.ajax({
                         type: "POST",
                         url: "/api/login",
-                        data: { username: uname, password: upass },
+                        data: {
+                            username: uname,
+                            password: upass
+                        },
                         dataType: "json",
                         beforeSend: function () {
                             loadTip = layer.load();
@@ -81,12 +83,9 @@
                             if (res.code) {
                                 layer.msg(res.msg);
                                 layer.close(loadTip);
-                                return
+                                return false;
                             }
                             var timer = setTimeout(function () {
-                                // $(".login-btn").removeClass("layui-show");
-                                // $(".login-info").addClass("layui-show");
-                                // $("#loginUser span").text(res.userInfo.username).attr("data-id", res.userInfo.userid);
                                 clearTimeout(timer);
                                 layer.msg("登录成功");
                                 layer.close(index);
@@ -97,7 +96,7 @@
                         complete: function () {
                             console.log("数据提交完成");
                         },
-                        error: function () { }
+                        error: function () {}
                     });
 
                 }
@@ -164,23 +163,23 @@
                     $.ajax({
                         type: "POST",
                         url: "/api/register",
-                        data: { setname: setname, setpass: setpass, setrepass: setrepass },
+                        data: {
+                            setname: setname,
+                            setpass: setpass,
+                            setrepass: setrepass
+                        },
                         dataType: "json",
                         beforeSend() {
                             console.log("数据提交中");
                             loadTip = layer.load();
                         },
                         success: function (res) {
-                            debugger
                             if (res.code) {
                                 layer.msg(res.msg);
                                 layer.close(loadTip);
-                                return
+                                return false;
                             }
                             var timer = setTimeout(function () {
-                                // $(".login-btn").removeClass("layui-show");
-                                // $(".login-info").addClass("layui-show");
-                                // $("#loginUser span").text(res.userInfo.username).attr("data-id", res.userInfo.userid);
                                 clearTimeout(timer);
                                 layer.msg(res.msg);
                                 layer.close(loadTip);
@@ -191,12 +190,11 @@
                         complete: function () {
                             console.log("数据提交完成");
                         },
-                        error: function () { }
+                        error: function () {}
                     });
                 }
             });
         }
-
 
         //找回密码
         function repassBox() {
@@ -246,8 +244,6 @@
                     var loadTip = layer.load();
                     var timer = setTimeout(function () {
                         clearTimeout(timer);
-                        // $(".login-btn").removeClass("layui-show");
-                        // $(".login-info").addClass("layui-show");
                         layer.msg("邮件发送成功！");
                         layer.close(loadTip);
                         layer.close(index);

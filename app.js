@@ -5,11 +5,15 @@ const Cookies = require("cookies");
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 const session = require("express-session");
-const bcrypt = require("bcrypt");
 const passport = require("passport");
 const methodOverride = require("method-override");
+const bcrypt = require("bcrypt");
 const User = require("./models/User");
 const configInc = require("./config/config.inc");
+
+//config
+require("./config/passport")(passport);
+
 
 //加载数据库
 const mongoose = require("mongoose");
@@ -117,13 +121,14 @@ app.use(methodOverride('_method'));
 app.use(session({
     secret: 'secret',
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: true
 }))
 
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
+//connect-flash
 app.use(flash());
 
 // 配置全局变量
@@ -134,21 +139,10 @@ app.use((req, res, next) => {
     next();
 })
 
-
-//app.get("/",(req,res,next) => {
-//     // res.send("Hello");
-//     res.render("index",{"name":"JiaHua"});
-// })
-
 //根据不同功能划分功能模块
 app.use("/admin", admin);
 app.use("/api", api);
 app.use("/", main);
-
-// app.get("/main.css",(req,res,next)=>{
-//     res.setHeader("content-type","text/css");
-//     res.send("body{background:red}");
-// });
 
 //连接数据库
 mongoose.connect(dbconn.escLink, (err) => {
@@ -156,7 +150,6 @@ mongoose.connect(dbconn.escLink, (err) => {
         console.log("数据库连接失败！");
     } else {
         console.log("数据库连接成功！");
-
         //process.env.PORT：读取当前目录下环境变量port的值
         const port = process.env.PORT || 8088;
         app.listen(port, () => {
