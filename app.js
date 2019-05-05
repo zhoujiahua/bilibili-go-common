@@ -17,7 +17,6 @@ app.use(bodyParser.json());
 //注册使用cookie-parser
 app.use(cookieParser());
 
-
 //引入数据链接
 const dbconn = require("./db/db");
 
@@ -108,7 +107,7 @@ app.use("/", main);
 // });
 
 //连接数据库
-mongoose.connect(dbconn.localLink, (err) => {
+mongoose.connect(dbconn.escLink, (err) => {
     if (err) {
         console.log("数据库连接失败！");
     } else {

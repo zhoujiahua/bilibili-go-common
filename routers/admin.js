@@ -38,32 +38,32 @@ router.get("/user", (req, res, next) => {
 })
 
 //用户数据
-router.get("/user/info", (req, res, next) => {
-    let r = req.query,
-        page = r.page || 1,
-        limit = r.limit || 10,
-        skip = (page - 1) * limit;
-    User.find().count({}, (err, num) => {
-        if (err) {
-            res.json({
-                "code": 1,
-                "msg": "数据有误",
-                "count": 0,
-                "data": []
-            });
-            return
-        }
-        return num;
-    }).then((num) => {
-        User.find().limit(limit).skip(skip).then((usersNum) => {
-            res.json({
-                "code": 0,
-                "msg": "数据请求成功",
-                "count": num,
-                "data": usersNum
-            });
-        })
-    })
-})
+// router.get("/user/info", (req, res, next) => {
+//     let r = req.query,
+//         page = r.page || 1,
+//         limit = r.limit || 10,
+//         skip = (page - 1) * limit;
+//     User.find().countDocuments({}, (err, num) => {
+//         if (err) {
+//             res.json({
+//                 "code": 1,
+//                 "msg": "数据有误",
+//                 "count": 0,
+//                 "data": []
+//             });
+//             return
+//         }
+//         return num;
+//     }).then((num) => {
+//         User.find().limit(limit).skip(skip).then((usersNum) => {
+//             res.json({
+//                 "code": 0,
+//                 "msg": "数据请求成功",
+//                 "count": num,
+//                 "data": usersNum
+//             });
+//         })
+//     })
+// })
 
 module.exports = router;
