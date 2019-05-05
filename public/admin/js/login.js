@@ -171,6 +171,7 @@
                             loadTip = layer.load();
                         },
                         success: function (res) {
+                            debugger
                             if (res.code) {
                                 layer.msg(res.msg);
                                 layer.close(loadTip);
